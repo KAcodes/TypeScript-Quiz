@@ -46,16 +46,35 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  background-color: #f9f9f9
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border-color: #000000;
 }
 
-@media (prefers-color-scheme: light) {
+.answers-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.answers {
+  margin-bottom: 0.7em;
+}
+
+.correctAnswer {
+  background-color: green;
+}
+
+.incorrectAnswers {
+  background-color: red;
+}
+
+/* button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+} */
+
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -66,4 +85,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

@@ -16,7 +16,7 @@ type NewQuestion = {
   // creates question object array via api call link
 
 
-const quizInfo = [
+const initialQuestions = [
     {
         thisQuestion: "Pulmonic refers to what part of the body?",
         possibleAnswers: ["Hand", "Foot", "Face", "Lungs"],
@@ -67,10 +67,11 @@ const quizInfo = [
 
 const Quiz = () => {
 
-    const [startQuestions, setStartQuestions] = useState(quizInfo);
+    const [newQuestions, setNewQuestions] = useState(initialQuestions);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [correctCount, setCorrectCount] = useState(0);
     const [isGameFinished, setIsGameFinished] = useState(false);
+    const [isCorrect, setIsCorrect] = useState();
 
     useEffect(() => {
 
@@ -91,7 +92,7 @@ const Quiz = () => {
                
             });
         
-            setStartQuestions(myQuizInfo);
+            setNewQuestions(myQuizInfo);
         }
 
         APIQuestions()
@@ -102,17 +103,19 @@ const Quiz = () => {
     
    
     const handleAnswer = (chosenAnswer: string) => {
+        setTimeout(() => {
+            if (chosenAnswer === newQuestions[currentQuestion].answer) {
+                setCorrectCount(correctCount + 1)
+            }
+    
+            const nextQuestion = currentQuestion + 1;  
+            if (nextQuestion < newQuestions.length) {
+                setCurrentQuestion(nextQuestion)
+            }
+            else setIsGameFinished(true);
+        }, 2000);
         
-        if (chosenAnswer === startQuestions[currentQuestion].answer) {
-            setCorrectCount(correctCount + 1)
-        }
-
-        const nextQuestion = currentQuestion + 1;  
-        if (nextQuestion < startQuestions.length) {
-            setCurrentQuestion(nextQuestion)
-        }
-        else setIsGameFinished(true);
-    }
+    };
 
 
 
@@ -133,9 +136,9 @@ const Quiz = () => {
         <div>
             <h2>Question {currentQuestion + 1}/10</h2>
             <Question 
-                question={startQuestions[currentQuestion].thisQuestion} 
-                choices={startQuestions[currentQuestion].possibleAnswers}
-                answer={startQuestions[currentQuestion].answer}
+                question={newQuestions[currentQuestion].thisQuestion} 
+                choices={newQuestions[currentQuestion].possibleAnswers}
+                answer={newQuestions[currentQuestion].answer}
                 selectAnswer={handleAnswer}
             />
             <h4>Correct Answers: {correctCount}</h4>
