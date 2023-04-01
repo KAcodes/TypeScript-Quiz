@@ -36,19 +36,28 @@ const Quiz = () => {
     useEffect(() => {
 
         const APIQuestions = async() => {
-            const response = await fetch("https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple");
+            const response = await fetch("https://opentdb.com/api.php?amount=10");
             const result = await response.json();
             const data = await result.results;
         
+        function decode(str: string) {
+
+            let txt = new DOMParser().parseFromString(str, "text/html");
+            
+            return txt.documentElement.textContent;
+            
+            }
+
             console.log(data);
             const myQuizInfo = await data.map((item: NewQuestion) => {
                 const allAnswers: string[] = [...item.incorrect_answers, item.correct_answer];
                 const randomAnswers = _.shuffle(allAnswers);
                 
+
                 return {
-                        thisQuestion: item.question,
+                        thisQuestion: decode(item.question),
                         possibleAnswers: randomAnswers,
-                        answer: item.correct_answer
+                        answer: decode(item.correct_answer)
                 };
                
             });
@@ -81,8 +90,8 @@ const Quiz = () => {
 
 
   return (
-    <div>
-        <h1>Quiz App</h1>
+    <div className='quiz-container'>
+        <h1>Trivia Quiz</h1>
         {isGameFinished ? 
             <div>
                 <p>Well done, you finished the quiz! You scored {correctCount}/10!</p>
@@ -95,7 +104,7 @@ const Quiz = () => {
             </div>
         : 
         <div>
-            <h2>Question {currentQuestion + 1}/10</h2>
+            <h3>Question {currentQuestion + 1}/10</h3>
             <Question 
                 question={newQuestions[currentQuestion].thisQuestion} 
                 choices={newQuestions[currentQuestion].possibleAnswers}

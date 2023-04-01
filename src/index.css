@@ -29,6 +29,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-image: url("./components/cool-background.png");
+  color: rgb(19, 1, 51);
 }
 
 h1 {
@@ -49,7 +51,7 @@ button {
   background-color: #f9f9f9
 }
 button:hover {
-  border-color: #000000;
+  border-color: #535bf2;
 }
 
 .answers-list {
@@ -66,23 +68,14 @@ button:hover {
 }
 
 .incorrectAnswers {
-  background-color: red;
+  background-color: rgb(211, 14, 14);
 }
 
-/* button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-} */
+.quiz-container {
+  border: solid 2px #535bf2;
+  background-color: #b6b8ee;
+  border-radius: 50px;
+  padding: 15px;
+}
 
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
+

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Button} from 'react-bootstrap';
 
 type Prop = {
   question: string,
@@ -11,6 +10,7 @@ type Prop = {
 const Question: React.FC<Prop> = ({question, choices, answer, selectAnswer}) => {
 
 const highlightResponse = (guess: string, answ: string) => {
+
   const buttonAnswers = document.querySelectorAll("button");
     for (let i = 0; i < buttonAnswers.length; i++){
 
@@ -34,11 +34,11 @@ const highlightResponse = (guess: string, answ: string) => {
   return (
     <div>
       <h4>{question}</h4>
-      <div className="answers-list">
+      <div className="answers-list ">
         { choices.map((choice) => (
-          <button className='answers'
+          <button className="answers my-2"
             onClick={(e) => {
-              e.preventDefault();
+              e.preventDefault(); 
               selectAnswer(choice)
               highlightResponse(choice, answer)
           }
