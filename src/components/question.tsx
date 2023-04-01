@@ -10,48 +10,40 @@ type Prop = {
 
 const Question: React.FC<Prop> = ({question, choices, answer, selectAnswer}) => {
 
+const highlightResponse = (guess: string, answ: string) => {
+  const buttonAnswers = document.querySelectorAll("button");
+    for (let i = 0; i < buttonAnswers.length; i++){
 
+      if (buttonAnswers[i].innerHTML == answ){
+        buttonAnswers[i].classList.add("correctAnswer");
+        setTimeout(() => {
+          buttonAnswers[i].classList.remove("correctAnswer")
+        }, 1500);
+      };
+
+      if (buttonAnswers[i].innerHTML == guess && buttonAnswers[i].innerHTML != answ) {
+        buttonAnswers[i].classList.add("incorrectAnswers");
+        setTimeout(() => {
+          buttonAnswers[i].classList.remove("incorrectAnswers")
+        }, 1500);
+      }
+    }
+}
 
     
   return (
     <div>
       <h4>{question}</h4>
-      <div className="answers-list"
-        onClick={(e) => {
-          console.log("foo")
-          //if (e.target)
-        }}
-      >
+      <div className="answers-list">
         { choices.map((choice) => (
           <button className='answers'
             onClick={(e) => {
               e.preventDefault();
               selectAnswer(choice)
-              
-              if (choice == answer) {
-                  e.currentTarget.classList.add('correctAnswer')
-                  console.log(choice, answer)
-                  setTimeout(() => {
-                    console.log("correct")
-                    e.currentTarget.classList.remove('correctAnswer')
-                  }, 2000) 
-              }
-              else {
-                e.currentTarget.classList.add('incorrectAnswers');
-                 setTimeout(() => {
-                  console.log("wrong")
-                  e.currentTarget.classList.remove('incorrectAnswers')
-                }, 2000) 
-            };
-
-              
-
-              
-
-            }
-          
+              highlightResponse(choice, answer)
           }
-          >{choice}</button>
+        }
+        >{choice}</button>
         ))} 
       </div>
     </div>

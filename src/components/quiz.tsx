@@ -16,62 +16,22 @@ type NewQuestion = {
   // creates question object array via api call link
 
 
-const initialQuestions = [
+const loading = [
     {
-        thisQuestion: "Pulmonic refers to what part of the body?",
-        possibleAnswers: ["Hand", "Foot", "Face", "Lungs"],
-        answer: "Lungs"
+        thisQuestion: "Loading...",
+        possibleAnswers: [""],
+        answer: ""
     },
-    {
-        thisQuestion: "Which of the following accounts for 9% of deforestation?",
-        possibleAnswers: ["Slash & Burn", "Mining", "Logging", "Forest Fires"],
-        answer: "Forest Fires"
-    },
-    {
-        thisQuestion: "Kia Motors originated from which country?",
-        possibleAnswers: ["South Korea", "Japan", "China", "India"],
-        answer: "South Korea"
-    },
-    {
-        thisQuestion: "Pulmonic refers to what part of the body?",
-        possibleAnswers: ["Hand", "Foot", "Face", "Lungs"],
-        answer: "Lungs"
-    },
-    {
-        thisQuestion: "Which of the following accounts for 9% of deforestation?",
-        possibleAnswers: ["Slash & Burn", "Mining", "Logging", "Forest Fires"],
-        answer: "Forest Fires"
-    },
-    {
-        thisQuestion: "Kia Motors originated from which country?",
-        possibleAnswers: ["South Korea", "Japan", "China", "India"],
-        answer: "South Korea"
-    },
-    {
-        thisQuestion: "Pulmonic refers to what part of the body?",
-        possibleAnswers: ["Hand", "Foot", "Face", "Lungs"],
-        answer: "Lungs"
-    },
-    {
-        thisQuestion: "Which of the following accounts for 9% of deforestation?",
-        possibleAnswers: ["Slash & Burn", "Mining", "Logging", "Forest Fires"],
-        answer: "Forest Fires"
-    },
-    {
-        thisQuestion: "Kia Motors originated from which country?",
-        possibleAnswers: ["South Korea", "Japan", "China", "India"],
-        answer: "South Korea"
-    }
 ];
 
 
 const Quiz = () => {
 
-    const [newQuestions, setNewQuestions] = useState(initialQuestions);
+    const [newQuestions, setNewQuestions] = useState(loading);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [correctCount, setCorrectCount] = useState(0);
     const [isGameFinished, setIsGameFinished] = useState(false);
-    const [isCorrect, setIsCorrect] = useState();
+
 
     useEffect(() => {
 
@@ -80,6 +40,7 @@ const Quiz = () => {
             const result = await response.json();
             const data = await result.results;
         
+            console.log(data);
             const myQuizInfo = await data.map((item: NewQuestion) => {
                 const allAnswers: string[] = [...item.incorrect_answers, item.correct_answer];
                 const randomAnswers = _.shuffle(allAnswers);
@@ -113,7 +74,7 @@ const Quiz = () => {
                 setCurrentQuestion(nextQuestion)
             }
             else setIsGameFinished(true);
-        }, 2000);
+        }, 1500);
         
     };
 
