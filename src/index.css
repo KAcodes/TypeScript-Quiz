@@ -14,6 +14,13 @@
   -webkit-text-size-adjust: 100%;
 }
 
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -75,7 +82,7 @@ button:hover {
   border: solid 2px #535bf2;
   background-color: #b6b8ee;
   border-radius: 50px;
-  padding: 15px;
+  padding: 35px;
 }
 
 
