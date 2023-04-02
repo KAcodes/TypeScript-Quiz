@@ -13,9 +13,6 @@ type NewQuestion = {
     type: string
   }
 
-  // creates question object array via api call link
-
-
 const loading = [
     {
         thisQuestion: "Loading...",
@@ -24,6 +21,7 @@ const loading = [
     },
 ];
 
+// Component returns quiz interface with functionality creating dynamic content
 
 const Quiz = () => {
 
@@ -32,7 +30,7 @@ const Quiz = () => {
     const [correctCount, setCorrectCount] = useState(0);
     const [isGameFinished, setIsGameFinished] = useState(false);
 
-
+    // async func creates data to be used as questions through fetch API, updates every time quiz is finished  
     useEffect(() => {
 
         const APIQuestions = async() => {
@@ -40,36 +38,28 @@ const Quiz = () => {
             const result = await response.json();
             const data = await result.results;
         
-        function decode(str: string) {
+            //function converts html entities from fetch return into strings 
+            function decode(str: string) {
+                
+                let txt = new DOMParser().parseFromString(str, "text/html");
+                return txt.documentElement.textContent;
+                }
 
-            let txt = new DOMParser().parseFromString(str, "text/html");
-            
-            return txt.documentElement.textContent;
-            
-            }
-
-            console.log(data);
             const myQuizInfo = await data.map((item: NewQuestion) => {
                 const allAnswers: string[] = [...item.incorrect_answers, item.correct_answer];
                 const randomAnswers = _.shuffle(allAnswers);
                 
-
                 return {
                         thisQuestion: decode(item.question),
                         possibleAnswers: randomAnswers,
                         answer: decode(item.correct_answer)
                 };
-               
             });
-        
             setNewQuestions(myQuizInfo);
         }
 
         APIQuestions()
-    }, [isGameFinished])
-    
-   
-    
+    }, [isGameFinished]);
     
    
     const handleAnswer = (chosenAnswer: string) => {
@@ -86,8 +76,6 @@ const Quiz = () => {
         }, 1500);
         
     };
-
-
 
   return (
     <div className='quiz-container'>

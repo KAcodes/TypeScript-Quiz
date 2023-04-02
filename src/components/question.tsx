@@ -7,6 +7,9 @@ type Prop = {
   selectAnswer: (chosen: string) => void;
 }
 
+// Component returns question with optional answers
+// Button click changes colour of buttons and determines if guess is correct
+
 const Question: React.FC<Prop> = ({question, choices, answer, selectAnswer}) => {
 
 const highlightResponse = (guess: string, answ: string) => {
@@ -29,7 +32,6 @@ const highlightResponse = (guess: string, answ: string) => {
       }
     }
 }
-
     
   return (
     <div>
