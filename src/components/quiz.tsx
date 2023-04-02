@@ -45,6 +45,7 @@ const Quiz = () => {
                 return txt.documentElement.textContent;
                 }
 
+            //shuffles answers array
             const myQuizInfo = await data.map((item: NewQuestion) => {
                 const allAnswers: string[] = [...item.incorrect_answers, item.correct_answer];
                 const randomAnswers = _.shuffle(allAnswers);

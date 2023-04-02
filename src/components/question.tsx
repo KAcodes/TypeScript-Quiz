@@ -35,10 +35,12 @@ const highlightResponse = (guess: string, answ: string) => {
     
   return (
     <div>
-      <h4>{question}</h4>
+      <h4 id='question'>{question}</h4>
       <div className="answers-list ">
-        { choices.map((choice) => (
-          <button className="answers my-2"
+        { choices.map((choice, index) => (
+          <button 
+            key={index}
+            className="answers my-2"
             onClick={(e) => {
               e.preventDefault(); 
               selectAnswer(choice)
