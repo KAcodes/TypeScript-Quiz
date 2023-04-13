@@ -16,18 +16,22 @@ I worked on using conditional programming and setTimeout functions to smoothly r
 
 1) Open your terminal and navigate to the folder you want to install my project, then type
 
-  $ git clone https://github.com/KAcodes/TypeScript-Quiz.git
-
+```bash
+$ git clone https://github.com/KAcodes/TypeScript-Quiz.git
+```
   This clones the repo
 
 2) cd into the new folder and type
 
-  $ npm install 
-
+```bash
+$ npm install 
+```
   This installs the required dependencies
 
 3) To run the React project type 
 
-  $ npm run dev
+```bash
+$ npm run dev 
+```
 
   The app will then run in development mode with path http://localhost:5173 in your browser.
