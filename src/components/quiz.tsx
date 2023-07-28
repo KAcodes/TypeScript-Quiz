@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import _ from "lodash";
 import Question from "./question";
 
@@ -26,7 +26,9 @@ const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [isGameFinished, setIsGameFinished] = useState(false);
-  const [quizLoading, setQuizLoading] = useState(null);
+  const [loadingStatus, setLoadingStatus] = useState(false);
+
+  const endBtn = useRef()
 
   // async func creates data to be used as questions through fetch API, updates every time quiz is finished
   useEffect(() => {
@@ -34,7 +36,7 @@ const Quiz = () => {
       const response = await fetch("https://opentdb.com/api.php?amount=10");
       const result = await response.json();
       const data = await result.results;
-
+      
       //function converts html entities from fetch return into strings
       function decode(str: string) {
         let txt = new DOMParser().parseFromString(str, "text/html");
@@ -47,7 +49,9 @@ const Quiz = () => {
           ...item.incorrect_answers,
           item.correct_answer,
         ];
-        const randomAnswers = _.shuffle(allAnswers).map(question => decode(question));
+        const randomAnswers = _.shuffle(allAnswers).map((question) =>
+          decode(question)
+        );
 
         return {
           thisQuestion: decode(item.question),
@@ -56,14 +60,13 @@ const Quiz = () => {
         };
       });
       setNewQuestions(myQuizInfo);
-      console.log(isGameFinished);
+      console.log(data)
     };
 
     APIQuestions();
-  }, [isGameFinished]);
+  }, [loadingStatus]);
 
   const handleAnswer = (chosenAnswer: string) => {
-
     const nextQuestion = currentQuestion + 1;
     setTimeout(() => {
       if (chosenAnswer === newQuestions[currentQuestion].answer) {
@@ -72,20 +75,50 @@ const Quiz = () => {
 
       if (nextQuestion < newQuestions.length) {
         setCurrentQuestion(nextQuestion);
-      } 
-    }, 1500);
-
-    if (nextQuestion == newQuestions.length) {
-      console.log(newQuestions[0].thisQuestion)
-      setCurrentQuestion(0);
-      setCorrectCount(0);
-      console.log(newQuestions[0].thisQuestion)
-      console.log(currentQuestion)
-      setIsGameFinished(true);
-    }
+      } else {
+        setIsGameFinished(true);
+        setLoadingStatus(prev => !prev); 
+        setCurrentQuestion(0);
+        setCorrectCount(0);
+      }
+    }, 1200);
   };
 
   return (
+    <div className="quiz-container">
+      <h1>Trivia Quiz</h1>
+      {isGameFinished ? (
+        <div>
+          <p>Well done, you finished the quiz! You scored {correctCount}/10!</p>
+          <button
+            id="restart-btn"   
+            onClick={(e) => {
+              e.currentTarget.disabled = true
+              setTimeout(() => {
+                setIsGameFinished(false);
+              }, 1000)
+              
+            }}
+          >
+            Start Again?
+          </button>
+        </div>
+      ) : (
+        <div>
+          <h3>Question {currentQuestion + 1}/10</h3>
+          <Question
+            question={newQuestions[currentQuestion].thisQuestion}
+            choices={newQuestions[currentQuestion].possibleAnswers}
+            answer={newQuestions[currentQuestion].answer}
+            selectAnswer={handleAnswer}
+          />
+          <h4>Correct Answers: {correctCount}</h4>
+        </div>
+      )}
+    </div>
+  ); 
+
+  /* return (
     <div className="quiz-container">
       <h1>Trivia Quiz</h1>
       {isGameFinished ? (
@@ -113,7 +146,7 @@ const Quiz = () => {
         </div>
       )}
     </div>
-  );
+  ); */
 };
 
 export default Quiz;

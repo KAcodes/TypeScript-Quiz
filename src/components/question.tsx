@@ -17,10 +17,6 @@ const Question: React.FC<Prop> = ({
   selectAnswer,
 }) => {
 
-  const disableBtns = () => {
-    const buttonAnswers = document.querySelectorAll("button");
-  }
-
   const highlightResponse = (guess: string, answ: string) => {
     const buttonAnswers = document.querySelectorAll("button");
     for (let i = 0; i < buttonAnswers.length; i++) {
@@ -28,7 +24,7 @@ const Question: React.FC<Prop> = ({
         buttonAnswers[i].classList.add("correctAnswer");
         setTimeout(() => {
           buttonAnswers[i].classList.remove("correctAnswer");
-        }, 1500);
+        }, 1200);
       }
 
       if (
@@ -37,13 +33,13 @@ const Question: React.FC<Prop> = ({
         buttonAnswers[i].classList.add("incorrectAnswers");
         setTimeout(() => {
           buttonAnswers[i].classList.remove("incorrectAnswers");
-        }, 1500);
+        }, 1200);
       }
       
       buttonAnswers[i].disabled = true;
       setTimeout(() => {
         buttonAnswers[i].disabled = false;
-      }, 1500);
+      }, 1200);
       
     }
   };
