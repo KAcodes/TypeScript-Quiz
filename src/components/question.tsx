@@ -46,8 +46,8 @@ const Question: React.FC<Prop> = ({
 
   return (
     <div>
-      <h4 id="question">{question}</h4>
-      <div className="answers-list ">
+      <h5 id="question">{question}</h5>
+      <div className="answers-list">
         {choices.map((choice, index) => (
           <button
             key={index}

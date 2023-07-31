@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import _ from "lodash";
 import Question from "./question";
 
@@ -27,8 +27,6 @@ const Quiz = () => {
   const [correctCount, setCorrectCount] = useState(0);
   const [isGameFinished, setIsGameFinished] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(false);
-
-  const endBtn = useRef()
 
   // async func creates data to be used as questions through fetch API, updates every time quiz is finished
   useEffect(() => {
@@ -79,13 +77,13 @@ const Quiz = () => {
         setIsGameFinished(true);
         setLoadingStatus(prev => !prev); 
         setCurrentQuestion(0);
-        setCorrectCount(0);
       }
     }, 1200);
   };
 
   return (
-    <div className="quiz-container">
+    <div id="quiz-container">
+      <div id="quiz">
       <h1>Trivia Quiz</h1>
       {isGameFinished ? (
         <div>
@@ -96,6 +94,7 @@ const Quiz = () => {
               e.currentTarget.disabled = true
               setTimeout(() => {
                 setIsGameFinished(false);
+                setCorrectCount(0);
               }, 1000)
               
             }}
@@ -115,38 +114,9 @@ const Quiz = () => {
           <h4>Correct Answers: {correctCount}</h4>
         </div>
       )}
+      </div>
     </div>
   ); 
-
-  /* return (
-    <div className="quiz-container">
-      <h1>Trivia Quiz</h1>
-      {isGameFinished ? (
-        <div>
-          <p>Well done, you finished the quiz! You scored {correctCount}/10!</p>
-          <button
-            onClick={() => {
-              setIsGameFinished(false);
-              console.log(currentQuestion)
-            }}
-          >
-            Start Again?
-          </button>
-        </div>
-      ) : (
-        <div>
-          <h3>Question {currentQuestion + 1}/10</h3>
-          <Question
-            question={newQuestions[currentQuestion].thisQuestion}
-            choices={newQuestions[currentQuestion].possibleAnswers}
-            answer={newQuestions[currentQuestion].answer}
-            selectAnswer={handleAnswer}
-          />
-          <h4>Correct Answers: {correctCount}</h4>
-        </div>
-      )}
-    </div>
-  ); */
 };
 
 export default Quiz;
